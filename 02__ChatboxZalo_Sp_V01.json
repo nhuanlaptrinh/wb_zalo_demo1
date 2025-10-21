@@ -1,0 +1,131 @@
+{
+  "name": "My workflow 36",
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.data.content }}"
+            },
+            {
+              "role": "system"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        220,
+        40
+      ],
+      "id": "8ba5a4b3-56a8-4f48-93bd-d47d1c1225e9",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "BpciZCOgdpJ79QO1",
+          "name": "OpenAi account 15"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-zalo-user-v2.zaloUser",
+      "typeVersion": 2,
+      "position": [
+        0,
+        40
+      ],
+      "id": "e0814b83-41ca-4e12-a754-ce793fe709c6",
+      "name": "Zalo User Trigger",
+      "credentials": {
+        "zaloUserCredentialsApi": {
+          "id": "dqQ8IkLKFem7jXqA",
+          "name": "Zalo 764315709759373485 - 2025-05-26T02:19:55.027Z"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "threadId": "={{ $('Zalo User Trigger').item.json.data.uidFrom }}",
+        "message": "={{ $json.message.content }}"
+      },
+      "type": "n8n-nodes-zalo-user-v2.zaloUserInteract",
+      "typeVersion": 1,
+      "position": [
+        596,
+        40
+      ],
+      "id": "4d7fa4b1-15b4-435f-87ca-57254b78e176",
+      "name": "Zalo User Interact",
+      "credentials": {
+        "zaloUserCredentialsApi": {
+          "id": "dqQ8IkLKFem7jXqA",
+          "name": "Zalo 764315709759373485 - 2025-05-26T02:19:55.027Z"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-zalo-user-v2.zaloUserLogin",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -220
+      ],
+      "id": "43a55766-e71a-496d-84db-f60315ccdfe2",
+      "name": "Zalo Login Via QR Code",
+      "credentials": {
+        "n8nApi": {
+          "id": "0C8MADKVVlnj46B1",
+          "name": "n8n account 3"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Zalo User Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Zalo User Interact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3512a5ba-89a6-4f9f-acfb-e8c2b13fbf68",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "94a383c02457267bcc44878635a0fa02b7d3206c5479bfc8890faa812e2bbd97"
+  },
+  "id": "fALqtOGNr9ybjuhY",
+  "tags": []
+}
